@@ -560,21 +560,6 @@ with tab3:
                                     st.session_state[f"confirm_delete_{bill['bill_id']}"] = True
                                     st.warning("⚠️ Click Delete again to confirm")
                 
-                # Data table view
-                st.divider()
-                st.subheader("📋 Table View")
-                st.dataframe(
-                    df[['bill_id', 'date', 'customer_name', 'total', 'payment_status']],
-                    column_config={
-                        "bill_id": "Bill ID",
-                        "date": "Date",
-                        "customer_name": "Customer",
-                        "total": st.column_config.NumberColumn("Total", format="₹%.2f"),
-                        "payment_status": "Status"
-                    },
-                    hide_index=True,
-                    use_container_width=True
-                )
             else:
                 st.info("No bills generated yet")
         else:

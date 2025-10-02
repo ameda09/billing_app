@@ -2,3 +2,8 @@ bill_id,date,customer_name,customer_phone,customer_email,items,total,payment_sta
 1,2025-10-02 21:52:33,harish,9898989889,,"[{'name': 'csa', 'quantity': 1, 'price': 200.0, 'total': 200.0}]",200.0,Paid,
 2,2025-10-02 21:57:28,haoi,hooih,,"[{'name': 'sdv', 'quantity': 1, 'price': 2.0, 'total': 2.0}]",2.0,Paid,
 3,2025-10-02 21:59:05,hiohoo,09809809809,,"[{'name': 'sdv', 'quantity': 2, 'price': 2.0, 'total': 4.0}]",4.0,Paid,
+4,2025-10-03 01:48:07,sdca,0987,,"[{'name': 'sdv', 'quantity': 1, 'price': 2.0, 'total': 2.0}]",2.0,Unpaid,
+5,2025-10-03 01:48:47,joi,joi,,"[{'name': 'sdv', 'quantity': 1, 'price': 2.0, 'total': 2.0}]",2.0,Paid,
+6,2025-10-03 01:49:14,98,89,,"[{'name': 'sdv', 'quantity': 1, 'price': 2.0, 'total': 2.0}]",2.0,Paid,
+7,2025-10-03 01:49:38,ui,ui,,"[{'name': 'sdv', 'quantity': 1, 'price': 2.0, 'total': 2.0}]",2.0,Paid,
+8,2025-10-03 01:50:56,09,9090,,"[{'name': 'sdv', 'quantity': 2, 'price': 2.0, 'total': 4.0}]",4.0,Unpaid,

@@ -335,7 +335,7 @@ with tab1:
                     bill_data = {
                         'shop': {
                             'name': 'Ganpati Electronics and E Services',
-                            'owner': 'Jogaram Sai, Devendra Choudhary',
+                            'owner': 'Jogaram Sai',
                             'address': 'Batadoo, Barmer (Raj)',
                             'phone': '9928754381, 7726969098',
                             'email': 'ganpatiemitrabatadu@gmail.com'
@@ -489,7 +489,7 @@ with tab3:
                 st.subheader("📋 All Bills")
                 
                 for index, bill in df.iterrows():
-                    with st.expander(f"Bill {bill['bill_id']} - {bill['customer_name']} - ₹{bill['total']:.2f} ({bill['payment_status']})"):
+                    with st.expander(f"Bill {bill['bill_id']} - {bill['customer_name']} - {bill['total']:.2f} ({bill['payment_status']})"):
                         col1, col2, col3 = st.columns([2, 1, 1])
                         
                         with col1:
@@ -497,14 +497,15 @@ with tab3:
                             st.write(f"**Customer:** {bill['customer_name']}")
                             st.write(f"**Phone:** {bill.get('customer_phone', 'N/A')}")
                             st.write(f"**Email:** {bill.get('customer_email', 'N/A')}")
-                            st.write(f"**Total:** ₹{bill['total']:.2f}")
+                            st.write(f"**Total:** {bill['total']:.2f}Rs")
                             st.write(f"**Payment Status:** {bill['payment_status']}")
                             if bill.get('notes'):
                                 st.write(f"**Notes:** {bill['notes']}")
                         
                         with col2:
-                            # View Items button with better formatting
-                            if st.button(f"�️ View Items", key=f"view_{bill['bill_id']}"):
+                            # View Items button with better formatting - add date to make key unique
+                            bill_date_key = bill['date'].replace(' ', '_').replace(':', '_').replace('-', '_')
+                            if st.button(f"👁️ View Items", key=f"view_{bill['bill_id']}_{bill_date_key}"):
                                 try:
                                     import ast
                                     items = ast.literal_eval(bill['items']) if bill['items'] else []
@@ -515,8 +516,8 @@ with tab3:
                                     st.error("Items data not available")
                         
                         with col3:
-                            # Delete button
-                            if st.button(f"🗑️ Delete", key=f"delete_{bill['bill_id']}", type="secondary"):
+                            # Delete button - add date to make key unique
+                            if st.button(f"🗑️ Delete", key=f"delete_{bill['bill_id']}_{bill_date_key}", type="secondary"):
                                 if st.session_state.get(f"confirm_delete_{bill['bill_id']}", False):
                                     if delete_bill(bill['bill_id']):
                                         st.experimental_rerun()
@@ -530,7 +531,7 @@ with tab3:
                 with col1:
                     st.metric("Total Bills", len(df))
                 with col2:
-                    st.metric("Total Revenue", f"₹{df['total'].sum():.2f}")
+                    st.metric("Total Revenue", f"{df['total'].sum():.2f}Rs")
                 with col3:
                     paid_count = len(df[df['payment_status'] == 'Paid'])
                     st.metric("Paid Bills", paid_count)

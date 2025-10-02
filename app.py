@@ -51,11 +51,11 @@ initialize_files()
 
 # Fixed shop details
 SHOP_DETAILS = {
-    'name': 'Prime Retail Store',
-    'owner': 'John Doe',
-    'address': '123 Business Street, Commerce City',
-    'phone': '+1 (555) 123-4567',
-    'email': 'contact@primeretail.com',
+    'name': 'Ganpati Electronics and E Services',
+    'owner': 'Shop Owner',
+    'address': '123 Main Street, Electronics Market',
+    'phone': '+91 98765 43210',
+    'email': 'contact@ganpatielectronics.com',
     'gst': 'GST123456789'
 }
 
@@ -297,9 +297,9 @@ def generate_bill():
             table_data.append([
                 str(idx),
                 item['name'],
-                f"₹{item['price']:.2f}",
+                f"{item['price']:.2f}Rs",
                 str(item['quantity']),
-                f"₹{item['total']:.2f}"
+                f"{item['total']:.2f}Rs"
             ])
         
         # Empty rows for more space
@@ -334,10 +334,10 @@ def generate_bill():
         elements.append(Spacer(1, 0.2*inch))
         
         # === TOTAL AMOUNT (below table, right aligned) ===
-        total_para = Paragraph(f"<b>Total Amount: ₹{data['total']:.2f} (In Rupees INR)</b>", 
+        total_para = Paragraph(f"<b>Total Amount: {data['total']:.2f}Rs </b>", 
                               ParagraphStyle('Total', 
                                            parent=normal_style, 
-                                           fontSize=14, 
+                                           fontSize=10, 
                                            alignment=TA_RIGHT,
                                            fontName='Helvetica-Bold'))
         elements.append(total_para)
@@ -365,7 +365,7 @@ def generate_bill():
             remarks_text = ''
         
         footer_data = [
-            ['Remarks:', 'Sign & Date:'],
+            ['Remarks:', 'Signature:'],
             [remarks_text, '']
         ]
         
@@ -400,10 +400,13 @@ def generate_bill():
         doc.build(elements)
         buffer.seek(0)
         
-        # Save bill record without bill number reference
+        # Save bill record - use max ID + 1 to avoid conflicts
         bills_df = pd.read_csv(BILLS_CSV)
-        # Generate a simple sequential ID for internal tracking
-        next_id = len(bills_df) + 1
+        # Generate ID based on max existing ID, not count of bills
+        if len(bills_df) > 0:
+            next_id = int(bills_df['bill_id'].max()) + 1
+        else:
+            next_id = 1
         
         new_bill = {
             'bill_id': next_id,
@@ -423,7 +426,7 @@ def generate_bill():
             buffer,
             mimetype='application/pdf',
             as_attachment=True,
-            download_name=f'Bill-{next_id}.pdf'
+            download_name='ganpati_bill.pdf'  # Fixed name as requested
         )
     except Exception as e:
         return jsonify({'error': str(e)}), 500

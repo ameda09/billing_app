@@ -485,6 +485,41 @@ with tab3:
             if bills:
                 df = pd.DataFrame(bills)
                 
+                # Statistics at the top
+                st.subheader("📊 Statistics")
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.metric("Total Bills", len(df))
+                with col2:
+                    st.metric("Total Revenue", f"₹{df['total'].sum():.2f}")
+                with col3:
+                    paid_count = len(df[df['payment_status'] == 'Paid'])
+                    st.metric("Paid Bills", paid_count)
+                with col4:
+                    unpaid_count = len(df[df['payment_status'] == 'Unpaid'])
+                    st.metric("Unpaid Bills", unpaid_count)
+                
+                # Add some spacing
+                st.divider()
+                
+                # Data table view
+                st.subheader("📋 Table View")
+                st.dataframe(
+                    df[['bill_id', 'date', 'customer_name', 'total', 'payment_status']],
+                    column_config={
+                        "bill_id": "Bill ID",
+                        "date": "Date",
+                        "customer_name": "Customer",
+                        "total": st.column_config.NumberColumn("Total", format="₹%.2f"),
+                        "payment_status": "Status"
+                    },
+                    hide_index=True,
+                    use_container_width=True
+                )
+                
+                # Add spacing before individual bills
+                st.divider()
+                
                 # Display bills with action buttons
                 st.subheader("📋 All Bills")
                 
@@ -525,21 +560,8 @@ with tab3:
                                     st.session_state[f"confirm_delete_{bill['bill_id']}"] = True
                                     st.warning("⚠️ Click Delete again to confirm")
                 
-                # Summary statistics
-                st.subheader("📊 Statistics")
-                col1, col2, col3, col4 = st.columns(4)
-                with col1:
-                    st.metric("Total Bills", len(df))
-                with col2:
-                    st.metric("Total Revenue", f"{df['total'].sum():.2f}Rs")
-                with col3:
-                    paid_count = len(df[df['payment_status'] == 'Paid'])
-                    st.metric("Paid Bills", paid_count)
-                with col4:
-                    unpaid_count = len(df[df['payment_status'] == 'Unpaid'])
-                    st.metric("Unpaid Bills", unpaid_count)
-                
                 # Data table view
+                st.divider()
                 st.subheader("📋 Table View")
                 st.dataframe(
                     df[['bill_id', 'date', 'customer_name', 'total', 'payment_status']],

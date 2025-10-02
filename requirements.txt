@@ -1,0 +1,30 @@
+# requirements.txt - Compatible with Python 3.9.6
+
+# Flask Backend
+flask==2.3.3
+flask-cors==4.0.0
+Werkzeug==2.3.7
+
+# Data Processing
+pandas==2.0.3
+numpy==1.24.4
+
+# PDF Generation
+reportlab==4.0.4
+Pillow==9.5.0
+
+# Streamlit Frontend
+streamlit==1.25.0
+streamlit-drawable-canvas==0.9.3
+
+# HTTP Requests
+requests==2.31.0
+urllib3==2.0.4
+
+# Additional Dependencies
+pytz==2023.3
+python-dateutil==2.8.2
+six==1.16.0
+
+# Optional but recommended for better performance
+watchdog==3.0.0
